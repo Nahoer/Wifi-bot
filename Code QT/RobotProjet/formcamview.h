@@ -3,7 +3,8 @@
 
 #include <QWidget>
 #include <QMediaPlayer>
-//#include <QtWebEngine>
+#include <QImage>
+
 
 namespace Ui {
 class FormCamView;
@@ -17,11 +18,18 @@ public:
     explicit FormCamView(QWidget *parent = nullptr);
     ~FormCamView();
     void setUrlStream(QString newUrl);
+
+
 private slots:
 
 private:
     Ui::FormCamView *ui;
     QString urlStream;
+    QImage image;
+    //QWebView *webview;
+    QMediaPlayer *player;
+    QVideoWidget *videoWidget;
+
 };
 
 #endif // FORMCAMVIEW_H

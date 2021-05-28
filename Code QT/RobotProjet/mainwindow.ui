@@ -153,6 +153,16 @@
      <string>Vitesse</string>
     </property>
    </widget>
+   <zorder>pushButton</zorder>
+   <zorder>pushButton_2</zorder>
+   <zorder>pushButtonDeconnect</zorder>
+   <zorder>pushButtonStopRobot</zorder>
+   <zorder>pushButtonReculer</zorder>
+   <zorder>pushButtonGauche</zorder>
+   <zorder>pushButtonDroite</zorder>
+   <zorder>spinBoxVitesseRobot</zorder>
+   <zorder>label</zorder>
+   <zorder>widgetCamStream</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -160,7 +170,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuParam_tres">
