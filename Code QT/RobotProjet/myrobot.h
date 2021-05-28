@@ -8,6 +8,8 @@
 #include <QTimer>
 #include <QMutex>
 #include <QIODevice>
+#include <QDataStream>
+
 
 class MyRobot : public QObject {
     Q_OBJECT
@@ -29,8 +31,13 @@ public slots:
     void readyRead();
     void MyTimerSlot();
     void sendRouler(int vitesse);
-
-private:
+    void traductionReponse(QByteArray reponse);
+    quint16 Crc16(QByteArray tab, int pos);
+    void sendStop();
+    void sendReculer(int vitesse);
+    void sendDroite(int vitesse);
+    void sendGauche(int vitesse);
+    private:
     QTcpSocket *socket;
     QTimer *TimerEnvoi;
 };

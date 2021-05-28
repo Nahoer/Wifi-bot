@@ -7,8 +7,8 @@ FormCamView::FormCamView(QWidget *parent) :
 {
 
     ui->setupUi(this);
-    this->urlStream="<img src='google.fr'/>";
-    player.setMedia(QUrl(urlStream));
+    this->urlStream="<img src='https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg'/>";
+    //QWebChannel test(this);
 }
 
 FormCamView::~FormCamView()

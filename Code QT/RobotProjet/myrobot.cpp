@@ -3,7 +3,7 @@
 #include "myrobot.h"
 
 MyRobot::MyRobot(QObject *parent) : QObject(parent) {
-    /*DataToSend.resize(9);
+    DataToSend.resize(9);
     DataToSend[0] = 0xFF;
     DataToSend[1] = 0x07;
     DataToSend[2] = 0x0;
@@ -12,22 +12,35 @@ MyRobot::MyRobot(QObject *parent) : QObject(parent) {
     DataToSend[5] = 0x0;
     DataToSend[6] = 0x0;
     DataToSend[7] = 0x0;
-    DataToSend[8] = 0x0;*/
+    DataToSend[8] = 0x0;
 
-    DataToSend.resize(9);
-    DataToSend[0] = 0xFF;
-    DataToSend[1] = 0x07;
-    DataToSend[2] = 0x78;
-    DataToSend[3] = 0x00;
-    DataToSend[4] = 0x78;
-    DataToSend[5] = 0x00;
-    DataToSend[6] = 0xD0;
-    DataToSend[7] = 0x0;
     DataReceived.resize(21);
     TimerEnvoi = new QTimer();
     // setup signal and slot
     connect(TimerEnvoi, SIGNAL(timeout()), this, SLOT(MyTimerSlot())); //Send data to wifibot timer
 }
+
+quint16 MyRobot::Crc16(QByteArray tab, int pos)
+{
+   tab.data();
+   unsigned char *data = (unsigned char*)tab.constData();
+   quint16 crc=0xFFFF;
+   quint16 Polynome = 0xA001;
+   quint16 Parity = 0;
+   for(; pos<tab.length();pos++)
+   {
+       crc ^= *(data+pos);
+       for(unsigned int CptBit=0; CptBit<=7;CptBit++)
+       {
+           Parity=crc;
+           crc >>=1;
+           if(Parity%2==true)crc ^=Polynome;
+       }
+   }
+
+    return crc;
+}
+
 
 
 void MyRobot::doConnect() {
@@ -69,9 +82,7 @@ void MyRobot::readyRead() {
     qDebug() << "reading..."; // read the data from the socket
     DataReceived = socket->readAll();
     emit updateUI(DataReceived);
-
-    qDebug() << DataReceived.toHex();
-    qDebug()<<"HELLO";
+    traductionReponse(DataReceived);
 }
 
 void MyRobot::MyTimerSlot() {
@@ -81,16 +92,98 @@ void MyRobot::MyTimerSlot() {
     Mutex.unlock();
 }
 
-void MyRobot::sendRouler(int vitesse){
-    DataToSend[0] = 0xFF;
-    DataToSend[1] = 0x07;
-    DataToSend[2] = 0x78;
-    DataToSend[3] = 0x00;
-    DataToSend[4] = 0x00;
-    DataToSend[5] = 0x00;
-    DataToSend[6] = 0x50;
-    DataToSend[7] = 0x00;
-    socket->write(DataToSend);
+void MyRobot::sendRouler(int vitesse)
+{
+    unsigned char zero=0;
+    while(Mutex.tryLock());
+    DataToSend.clear();
+    DataToSend.append(0xFF);
+    DataToSend.append(0x07);
+    DataToSend.append(vitesse);
+    DataToSend.append(zero);
+    DataToSend.append(vitesse);
+    DataToSend.append(zero);
+    DataToSend.append(0x50);
+    quint16 crcsend = Crc16(DataToSend,1);
+    DataToSend[7] = crcsend;
+    DataToSend[8] = crcsend>>8;
+
+    Mutex.unlock();
+}
+
+void MyRobot::sendStop()
+{
+    unsigned char zero =0;
+    while(Mutex.tryLock());
+    DataToSend.clear();
+    DataToSend.append(0xFF);
+    DataToSend.append(0x07);
+    DataToSend.append(zero);
+    DataToSend.append(zero);
+    DataToSend.append(zero);
+    DataToSend.append(zero);
+    DataToSend.append(zero);
+    quint16 crcsend = Crc16(DataToSend,1);
+    DataToSend[7] = crcsend;
+    DataToSend[8] = crcsend>>8;
+    Mutex.unlock();
+}
+
+void MyRobot::sendReculer(int vitesse)
+{
+    unsigned char zero =0;
+    while(Mutex.tryLock());
+    DataToSend.clear();
+    DataToSend.append(0xFF);
+    DataToSend.append(0x07);
+    DataToSend.append(vitesse);
+    DataToSend.append(zero);
+    DataToSend.append(vitesse);
+    DataToSend.append(zero);
+    DataToSend.append(zero);
+    quint16 crcsend = Crc16(DataToSend,1);
+    DataToSend[7] = crcsend;
+    DataToSend[8] = crcsend>>8;
+
+    Mutex.unlock();
+}
+
+void MyRobot::sendGauche(int vitesse)
+{
+    unsigned char zero =0;
+    DataToSend.clear();
+    DataToSend.append(0xFF);
+    DataToSend.append(0x07);
+    DataToSend.append(vitesse);
+    DataToSend.append(zero);
+    DataToSend.append(vitesse);
+    DataToSend.append(zero);
+    DataToSend.append(0x10);
+    quint16 crcsend = Crc16(DataToSend,1);
+    DataToSend[7] = crcsend;
+    DataToSend[8] = crcsend>>8;
+}
+
+void MyRobot::sendDroite(int vitesse)
+{
+    unsigned char zero =0;
+    DataToSend.clear();
+    DataToSend.append(0xFF);
+    DataToSend.append(0x07);
+    DataToSend.append(vitesse);
+    DataToSend.append(zero);
+    DataToSend.append(vitesse);
+    DataToSend.append(zero);
+    DataToSend.append(0x40);
+    quint16 crcsend = Crc16(DataToSend,1);
+    DataToSend[7] = crcsend;
+    DataToSend[8] = crcsend>>8;
+}
+
+void MyRobot::traductionReponse(QByteArray reponse)
+{
+    qDebug()<<"Message recu :";
+    qDebug()<<reponse.toHex();
 }
 
 
