@@ -7,7 +7,6 @@
 #include <QString>
 #include <QKeyEvent>
 
-
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -19,6 +18,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
 
 private slots:
     void on_pushButton_pressed();
@@ -37,8 +37,13 @@ private slots:
     void on_pushButtonDroite_pressed();
     void keyPressEvent(QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *);
+    void refreshInfos();
+    void on_verticalSlider_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     MyRobot *robotWifi;
+    QTimer *timerRefresh;
+    int vitesse;
 };
 #endif // MAINWINDOW_H
