@@ -19,6 +19,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 private slots:
     void on_pushButton_pressed();
     void openDialogConnexion();
@@ -36,8 +37,13 @@ private slots:
     void on_pushButtonDroite_pressed();
     void keyPressEvent(QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *);
+    void refreshInfos();
+    void on_verticalSlider_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     MyRobot *robotWifi;
+    QTimer *timerRefresh;
+    int vitesse;
 };
 #endif // MAINWINDOW_H

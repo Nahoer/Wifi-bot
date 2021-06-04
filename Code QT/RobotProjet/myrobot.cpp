@@ -3,6 +3,7 @@
 #include "myrobot.h"
 
 MyRobot::MyRobot(QObject *parent) : QObject(parent) {
+    connecterAuRobot = false;
     DataToSend.resize(9);
     DataToSend[0] = 0xFF;
     DataToSend[1] = 0x07;
@@ -68,6 +69,7 @@ void MyRobot::disConnect() {
 
 void MyRobot::connected() {
     qDebug() << "connected..."; // Hey server, tell me about you.
+    connecterAuRobot=true;
 }
 
 void MyRobot::disconnected() {
@@ -82,7 +84,9 @@ void MyRobot::readyRead() {
     qDebug() << "reading..."; // read the data from the socket
     DataReceived = socket->readAll();
     emit updateUI(DataReceived);
-    traductionReponse(DataReceived);
+    QByteArray reponseHex = DataReceived.toHex();
+    batterieLevel= reponseHex.at(4)+reponseHex.at(5);
+    versionRobot = reponseHex.at(36);
 }
 
 void MyRobot::MyTimerSlot() {
@@ -180,10 +184,26 @@ void MyRobot::sendDroite(int vitesse)
     DataToSend[8] = crcsend>>8;
 }
 
-void MyRobot::traductionReponse(QByteArray reponse)
+QString MyRobot::traductionReponse(QByteArray reponse)
 {
     qDebug()<<"Message recu :";
     qDebug()<<reponse.toHex();
+    return reponse;
 }
 
+QString MyRobot::getBatterie()
+{
+    qDebug()<<batterieLevel;
+    return QString::number(batterieLevel);
+}
 
+QString MyRobot::getVersion()
+{
+    qDebug()<<versionRobot;
+    return QString::number(versionRobot);
+}
+
+bool MyRobot::estConnecter()
+{
+    return connecterAuRobot;
+}

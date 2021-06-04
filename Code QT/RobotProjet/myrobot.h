@@ -9,7 +9,7 @@
 #include <QMutex>
 #include <QIODevice>
 #include <QDataStream>
-
+#include <string>
 
 class MyRobot : public QObject {
     Q_OBJECT
@@ -21,7 +21,15 @@ public:
     QByteArray DataToSend;
     QByteArray DataReceived;
     QMutex Mutex;
-
+    QString getVersion();
+    QString getBatterie();
+    void sendStop();
+    void sendReculer(int vitesse);
+    void sendDroite(int vitesse);
+    void sendGauche(int vitesse);
+    void sendRouler(int vitesse);
+    QString traductionReponse(QByteArray reponse);
+    bool estConnecter();
 signals:
     void updateUI(const QByteArray Data);
 public slots:
@@ -30,16 +38,14 @@ public slots:
     void bytesWritten(qint64 bytes);
     void readyRead();
     void MyTimerSlot();
-    void sendRouler(int vitesse);
-    void traductionReponse(QByteArray reponse);
     quint16 Crc16(QByteArray tab, int pos);
-    void sendStop();
-    void sendReculer(int vitesse);
-    void sendDroite(int vitesse);
-    void sendGauche(int vitesse);
+
     private:
     QTcpSocket *socket;
     QTimer *TimerEnvoi;
+    int batterieLevel;
+    bool connecterAuRobot;
+    int versionRobot;
 };
 
 #endif // MYROBOT_H
