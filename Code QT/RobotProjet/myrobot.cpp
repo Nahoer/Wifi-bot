@@ -184,6 +184,9 @@ void MyRobot::sendDroite(int vitesse)
     DataToSend[8] = crcsend>>8;
 }
 
+
+
+
 QString MyRobot::traductionReponse(QByteArray reponse)
 {
     qDebug()<<"Message recu :";
@@ -193,13 +196,13 @@ QString MyRobot::traductionReponse(QByteArray reponse)
 
 QString MyRobot::getBatterie()
 {
-    qDebug()<<batterieLevel;
+
     return QString::number(batterieLevel);
 }
 
 QString MyRobot::getVersion()
 {
-    qDebug()<<versionRobot;
+
     return QString::number(versionRobot);
 }
 

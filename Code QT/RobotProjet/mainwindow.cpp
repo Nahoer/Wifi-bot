@@ -7,15 +7,19 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     robotWifi = new MyRobot(this);
+    //dialogConnect = new DialogConnexion(this);
     timerRefresh = new QTimer;
-    connect(timerRefresh, SIGNAL(timeout()), this, SLOT(refreshInfos()));
+
     vitesse=90;
     this->ui->labelVitesse->setText(QString::number(vitesse));
     this->ui->pushButton_2->setIcon(QIcon("D:/Telechargement/chevron_up.svg"));
-     this->ui->pushButtonReculer->setIcon(QIcon("D:/Telechargement/chevron_down.svg"));
-     this->ui->pushButtonDroite->setIcon(QIcon("D:/Telechargement/chevron_right.svg"));
-     this->ui->pushButtonGauche->setIcon(QIcon("D:/Telechargement/chevron_left.svg"));
+    this->ui->pushButtonReculer->setIcon(QIcon("D:/Telechargement/chevron_down.svg"));
+    this->ui->pushButtonDroite->setIcon(QIcon("D:/Telechargement/chevron_right.svg"));
+    this->ui->pushButtonGauche->setIcon(QIcon("D:/Telechargement/chevron_left.svg"));
     this->ui->pushButtonStopRobot->setIcon(QIcon("D:/Telechargement/square_stop.svg"));
+
+    connect(timerRefresh, SIGNAL(timeout()), this, SLOT(refreshInfos()));
+
 }
 
 MainWindow::~MainWindow()
@@ -30,17 +34,22 @@ void MainWindow::openDialogConnexion(){
 
 void MainWindow::on_pushButton_pressed()
 {
-   robotWifi->doConnect();
+   robotWifi->doConnect(/*infosLogin[0],infosLogin[1]*/);
    ui->pushButton->setDisabled(true);
    ui->pushButtonDeconnect->setDisabled(false);
    timerRefresh->start(50);
 }
+/*
+void MainWindow::getInfoDialogConnexion()
+{
 
-void MainWindow::getInfoDialogConnexion(QString ipBot,int portBot,QString ipCam,int portCam ){
-
-
+    infosLogin->append();
+    infosLogin->append(portBot);
+    infosLogin->append(ipCam);
+    infosLogin->append(portCam);
+    qDebug()<<infosLogin;
 }
-
+*/
 void MainWindow::on_pushButton_2_pressed()
 {
     robotWifi->sendRouler(vitesse);
@@ -79,6 +88,7 @@ void MainWindow::on_pushButtonDroite_pressed()
 
 void MainWindow::keyPressEvent(QKeyEvent *event)
 {
+
    if(event->text()=="z"||event->text()=="Z")
    {
        robotWifi->sendRouler(vitesse);
@@ -130,7 +140,7 @@ void MainWindow::refreshInfos()
     {
         if(batterie.toInt()>99)
            {
-            ui->label_BatterieValue->setText("100%");
+            ui->label_BatterieValue->setText(batterie);
             ui->label_Version->setText(robotWifi->getVersion());
             }
         else

@@ -23,7 +23,7 @@ public:
 private slots:
     void on_pushButton_pressed();
     void openDialogConnexion();
-    void getInfoDialogConnexion(QString ipBot,int portBot,QString ipCam,int portCam );
+    //void getInfoDialogConnexion(QString ipBot,int portBot,QString ipCam,int portCam );
     void on_pushButton_2_pressed();
 
     void on_pushButtonDeconnect_pressed();
@@ -44,6 +44,8 @@ private:
     Ui::MainWindow *ui;
     MyRobot *robotWifi;
     QTimer *timerRefresh;
+    //DialogConnexion *dialogConnect;
     int vitesse;
+    QString infosLogin[4];
 };
 #endif // MAINWINDOW_H

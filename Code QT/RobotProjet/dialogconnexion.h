@@ -22,6 +22,7 @@ private slots:
 
 private:
     Ui::DialogConnexion *ui;
+    QString infosConnexion[4];
 
 };
 
