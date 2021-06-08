@@ -5,7 +5,7 @@
 #include <QMediaPlayer>
 #include <QImage>
 #include <QWebEngineView>
-#include<QtWebEngineWidgets>
+#include<QNetworkAccessManager>
 
 
 namespace Ui {
@@ -23,8 +23,11 @@ public:
 
 private slots:
 
+    void on_camHaut_pressed();
+
 private:
     Ui::FormCamView *ui;
+    QNetworkAccessManager *depCam;
 };
 
 #endif // FORMCAMVIEW_H
