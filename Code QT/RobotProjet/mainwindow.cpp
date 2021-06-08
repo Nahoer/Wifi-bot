@@ -12,11 +12,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     vitesse=90;
     this->ui->labelVitesse->setText(QString::number(vitesse));
-    this->ui->pushButton_2->setIcon(QIcon("D:/Telechargement/chevron_up.svg"));
-    this->ui->pushButtonReculer->setIcon(QIcon("D:/Telechargement/chevron_down.svg"));
-    this->ui->pushButtonDroite->setIcon(QIcon("D:/Telechargement/chevron_right.svg"));
-    this->ui->pushButtonGauche->setIcon(QIcon("D:/Telechargement/chevron_left.svg"));
-    this->ui->pushButtonStopRobot->setIcon(QIcon("D:/Telechargement/square_stop.svg"));
+    this->ui->pushButton_2->setIcon(QIcon("../../Images/Icons/chevron_up.svg"));
+    this->ui->pushButtonReculer->setIcon(QIcon("../../Images/Icons/chevron_down.svg"));
+    this->ui->pushButtonDroite->setIcon(QIcon("../../Images/Icons/chevron_right.svg"));
+    this->ui->pushButtonGauche->setIcon(QIcon("../../Images/Icons/chevron_left.svg"));
+    this->ui->pushButtonStopRobot->setIcon(QIcon("../../Images/Icons/square_stop.svg"));
 
     connect(timerRefresh, SIGNAL(timeout()), this, SLOT(refreshInfos()));
 
