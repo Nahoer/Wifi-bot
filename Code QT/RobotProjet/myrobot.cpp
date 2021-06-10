@@ -91,7 +91,11 @@ void MyRobot::readyRead() {
     this->IRAvantDroit = reponseHex.at(22)+reponseHex.at(23);
     this->IRArrièreDroit = reponseHex.at(24) + reponseHex.at(25);
     versionRobot = reponseHex.at(36)+reponseHex.at(37);
-    qDebug() << DataReceived;
+    qDebug() << "byte 1 :";
+    qDebug() << reponseHex.at(36);
+    qDebug() << "byte 2 :";
+    qDebug() <<
+
 
 }
 
