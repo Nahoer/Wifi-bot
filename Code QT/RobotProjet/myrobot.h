@@ -46,6 +46,10 @@ public slots:
     int batterieLevel;
     bool connecterAuRobot;
     int versionRobot;
+    int IRAvantGauche;
+    int IRAvantDroit;
+    int IRArrièreGauche;
+    int IRArrièreDroit;
 };
 
 #endif // MYROBOT_H

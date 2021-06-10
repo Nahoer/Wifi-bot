@@ -86,7 +86,13 @@ void MyRobot::readyRead() {
     emit updateUI(DataReceived);
     QByteArray reponseHex = DataReceived.toHex();
     batterieLevel= reponseHex.at(4)+reponseHex.at(5);
-    versionRobot = reponseHex.at(36);
+    this->IRAvantGauche = reponseHex.at(6)+reponseHex.at(7);
+    this->IRArrièreGauche = reponseHex.at(8)+reponseHex.at(9);
+    this->IRAvantDroit = reponseHex.at(22)+reponseHex.at(23);
+    this->IRArrièreDroit = reponseHex.at(24) + reponseHex.at(25);
+    versionRobot = reponseHex.at(36)+reponseHex.at(37);
+    qDebug() << DataReceived;
+
 }
 
 void MyRobot::MyTimerSlot() {
