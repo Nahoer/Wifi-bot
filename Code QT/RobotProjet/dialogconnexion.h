@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QMessageBox>
+#include <QVector>
 
 namespace Ui {
 class DialogConnexion;
@@ -16,14 +17,19 @@ public:
     explicit DialogConnexion(QWidget *parent = nullptr);
     ~DialogConnexion();
     bool checkInfosInput();
-
+   QVector<QString> getTabInfoConnexion();
 private slots:
     void acceptInfoRobot();
 
+    void on_buttonBox_accepted();
+
 private:
     Ui::DialogConnexion *ui;
-    QString infosConnexion[4];
-
+    QVector<QString> infosConnexion;
+    QString ipRobot;
+    QString ipCam;
+    QString portRobot;
+    QString portCam;
 };
 
 #endif // DIALOGCONNEXION_H

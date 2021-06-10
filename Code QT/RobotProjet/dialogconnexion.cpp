@@ -14,15 +14,14 @@ DialogConnexion::~DialogConnexion()
 }
 
 void DialogConnexion::acceptInfoRobot()
-{/*
+{
     if(checkInfosInput()){
-        infosConnexion->append(ui->lineEditIpCamera->text());
-        QString ipRobot=ui->lineEditIpRobot->text();
-        QString portRobot=ui->lineEditPortRobot->text();
-        QString portCam=ui->lineEditPortCamera->text();
-
+        infosConnexion.insert(0,(ui->lineEditIpCamera->text()));
+        infosConnexion.insert(1,ui->lineEditIpRobot->text());
+        infosConnexion.insert(2,ui->lineEditPortRobot->text());
+        infosConnexion.insert(3,ui->lineEditPortCamera->text());
+        emit this->accept();
     }
-*/
 }
 
 bool DialogConnexion::checkInfosInput(){
@@ -30,6 +29,16 @@ bool DialogConnexion::checkInfosInput(){
     /*int ret = QMessageBox::critical(this, tr("Erreur"),
                                           tr("Un champ est vide ou mal saisi"),
                                           QMessageBox::Ok);
-*/
+    */
     return valide;
+}
+
+QVector<QString> DialogConnexion::getTabInfoConnexion()
+{
+    return infosConnexion;
+}
+
+void DialogConnexion::on_buttonBox_accepted()
+{
+    acceptInfoRobot();
 }

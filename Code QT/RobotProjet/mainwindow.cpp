@@ -7,19 +7,18 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     robotWifi = new MyRobot(this);
-    //dialogConnect = new DialogConnexion(this);
+    dialogConnect = new DialogConnexion(this);
     timerRefresh = new QTimer;
-
+    dialogConnect = new DialogConnexion(this);
     vitesse=90;
     this->ui->labelVitesse->setText(QString::number(vitesse));
-    this->ui->pushButton_2->setIcon(QIcon("../../Images/Icons/chevron_up.svg"));
-    this->ui->pushButtonReculer->setIcon(QIcon("../../Images/Icons/chevron_down.svg"));
-    this->ui->pushButtonDroite->setIcon(QIcon("../../Images/Icons/chevron_right.svg"));
-    this->ui->pushButtonGauche->setIcon(QIcon("../../Images/Icons/chevron_left.svg"));
-    this->ui->pushButtonStopRobot->setIcon(QIcon("../../Images/Icons/square_stop.svg"));
-
+    this->ui->pushButton_2->setIcon(QIcon("images/chevron_up.svg"));
+    this->ui->pushButtonReculer->setIcon(QIcon("images/chevron_down.svg"));
+    this->ui->pushButtonDroite->setIcon(QIcon("images/chevron_right.svg"));
+    this->ui->pushButtonGauche->setIcon(QIcon("images/chevron_left.svg"));
+    this->ui->pushButtonStopRobot->setIcon(QIcon("images/square_stop.svg"));
     connect(timerRefresh, SIGNAL(timeout()), this, SLOT(refreshInfos()));
-
+    connect(dialogConnect, SIGNAL(accepted()),this, SLOT(getInfoDialogConnexion()));
 }
 
 MainWindow::~MainWindow()
@@ -28,28 +27,30 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::openDialogConnexion(){
-    DialogConnexion dialogConnect(this);
-    dialogConnect.exec();
+
+    dialogConnect->exec();
+
 }
 
 void MainWindow::on_pushButton_pressed()
 {
-   robotWifi->doConnect(/*infosLogin[0],infosLogin[1]*/);
+   robotWifi->doConnect(infosLogin[0],infosLogin[1]);
    ui->pushButton->setDisabled(true);
    ui->pushButtonDeconnect->setDisabled(false);
    timerRefresh->start(50);
 }
-/*
+
 void MainWindow::getInfoDialogConnexion()
 {
-
-    infosLogin->append();
-    infosLogin->append(portBot);
-    infosLogin->append(ipCam);
-    infosLogin->append(portCam);
+    infosLogin.clear();
+    infosLogin.insert(0,dialogConnect->getTabInfoConnexion().at(0));
+    infosLogin.insert(1,dialogConnect->getTabInfoConnexion().at(1));
+    infosLogin.insert(2,dialogConnect->getTabInfoConnexion().at(2));
+    infosLogin.insert(3,dialogConnect->getTabInfoConnexion().at(3));
     qDebug()<<infosLogin;
+
 }
-*/
+
 void MainWindow::on_pushButton_2_pressed()
 {
     robotWifi->sendRouler(vitesse);

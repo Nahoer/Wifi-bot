@@ -81,40 +81,7 @@
   </layout>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>rejected()</signal>
-   <receiver>DialogConnexion</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>214</x>
-     <y>284</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>225</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonBox</sender>
-   <signal>accepted()</signal>
-   <receiver>DialogConnexion</receiver>
-   <slot>acceptInfoRobot()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>85</x>
-     <y>270</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>85</x>
-     <y>156</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>acceptInfoRobot()</slot>
  </slots>
