@@ -41,4 +41,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
+    images/chevron_down.svg \
+    images/chevron_left.svg \
+    images/chevron_right.svg \
+    images/chevron_up.svg \
+    images/square_stop.svg \
     main.qml
