@@ -51,7 +51,6 @@ void MyRobot::doConnect(QString ip, QString port) {
     connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
     connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
     qDebug() << "connecting..."; // this is not blocking call
-    //socket->connectToHost("LOCALHOST", 15020);
     socket->connectToHost(ip, port.toInt()); // connection to wifibot
     //socket->connectToHost("192.168.1.11", 15020);
     // we need to wait...
@@ -85,17 +84,24 @@ void MyRobot::readyRead() {
     qDebug() << "reading..."; // read the data from the socket
     DataReceived = socket->readAll();
     emit updateUI(DataReceived);
+    HexaArray response = HexaArray();
+    response.FromByteArray(DataReceived.toHex());
     QByteArray reponseHex = DataReceived.toHex();
-    batterieLevel= reponseHex.at(4)+reponseHex.at(5);
-    this->IRAvantGauche = reponseHex.at(6)+reponseHex.at(7);
-    this->IRArrièreGauche = reponseHex.at(8)+reponseHex.at(9);
-    this->IRAvantDroit = reponseHex.at(22)+reponseHex.at(23);
-    this->IRArrièreDroit = reponseHex.at(24) + reponseHex.at(25);
-    versionRobot = reponseHex.at(36)+reponseHex.at(37);
-    qDebug() << "byte 1 :";
-    qDebug() << reponseHex.at(36);
-    qDebug() << "byte 2 :";
-    qDebug() << reponseHex.at(37);
+    batterieLevel= response.getAsInt(2);
+    IRAvantGauche = response.getAsInt(3);
+    IRArrièreGauche = response.getAsInt(4);
+    IRAvantDroit = response.getAsInt(11);
+    IRArrièreDroit = response.getAsInt(12);
+    versionRobot = response.getAsInt(18);
+    odometryGauche = response.getAsInt(5)+response.getAsInt(6)+response.getAsInt(7)+response.getAsInt(8);
+    odometryDroite = response.getAsInt(16)+response.getAsInt(15)+response.getAsInt(14)+response.getAsInt(13);
+    vitesseGauche = response.getAsInt(0)+response.getAsInt(1);
+    vitesseDroite = response.getAsInt(10)+response.getAsInt(9);
+
+    qDebug() << "vitesse gauche :";
+    qDebug() << vitesseGauche;
+    qDebug() << "vitesse droite :";
+    qDebug() << vitesseDroite;
 
 }
 

@@ -10,6 +10,7 @@
 #include <QIODevice>
 #include <QDataStream>
 #include <string>
+#include "hexaarray.h"
 
 class MyRobot : public QObject {
     Q_OBJECT
@@ -50,6 +51,11 @@ public slots:
     int IRAvantDroit;
     int IRArrièreGauche;
     int IRArrièreDroit;
+    int odometryGauche;
+    int odometryDroite;
+    int vitesseGauche;
+    int vitesseDroite;
+
 };
 
 #endif // MYROBOT_H
