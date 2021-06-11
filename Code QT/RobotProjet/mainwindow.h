@@ -6,6 +6,7 @@
 #include "dialogconnexion.h"
 #include <QString>
 #include <QKeyEvent>
+#include <QVector>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -23,7 +24,7 @@ public:
 private slots:
     void on_pushButton_pressed();
     void openDialogConnexion();
-    //void getInfoDialogConnexion(QString ipBot,int portBot,QString ipCam,int portCam );
+    void getInfoDialogConnexion();
     void on_pushButton_2_pressed();
 
     void on_pushButtonDeconnect_pressed();
@@ -44,8 +45,8 @@ private:
     Ui::MainWindow *ui;
     MyRobot *robotWifi;
     QTimer *timerRefresh;
-    //DialogConnexion *dialogConnect;
+    DialogConnexion *dialogConnect;
     int vitesse;
-    QString infosLogin[4];
+    QVector<QString> infosLogin;
 };
 #endif // MAINWINDOW_H

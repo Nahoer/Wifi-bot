@@ -13,23 +13,62 @@ DialogConnexion::~DialogConnexion()
     delete ui;
 }
 
-void DialogConnexion::acceptInfoRobot()
-{/*
-    if(checkInfosInput()){
-        infosConnexion->append(ui->lineEditIpCamera->text());
-        QString ipRobot=ui->lineEditIpRobot->text();
-        QString portRobot=ui->lineEditPortRobot->text();
-        QString portCam=ui->lineEditPortCamera->text();
 
+void DialogConnexion::acceptInfoRobot()
+{
+    infosConnexion.clear();
+    infosConnexion.insert(0,ui->lineEditIpCamera->text());
+    infosConnexion.insert(1,ui->lineEditIpRobot->text());
+    infosConnexion.insert(2,ui->lineEditPortRobot->text());
+    infosConnexion.insert(3,ui->lineEditPortCamera->text());
+    if(checkInfosInput()){
+        emit this->accept();
     }
-*/
 }
 
 bool DialogConnexion::checkInfosInput(){
     bool valide(true);
-    /*int ret = QMessageBox::critical(this, tr("Erreur"),
-                                          tr("Un champ est vide ou mal saisi"),
-                                          QMessageBox::Ok);
-*/
+    //Ligne IP robot
+    /*if(!this->verifierIp(infosConnexion.at(1)))
+    {
+        QMessageBox::critical(this, tr("!!!!Erreur!!!!"),
+                                                  tr("Le champs IP du robot contient une erreur"),
+                                                  QMessageBox::Ok);
+        valide = false;
+    }
+    //Ligne IP camera
+    if(!this->verifierIp(infosConnexion.at(0)))
+    {
+       QMessageBox::critical(this, tr("!!!!Erreur!!!!"),
+                                                  tr("Le champs IP de la camera contient une erreur"),
+                                                  QMessageBox::Ok);
+       valide=false;
+    }
+    //Port Robot
+    if(!this->verifierPort(infosConnexion.at(2)))
+    {
+        QMessageBox::critical(this, tr("!!!!Erreur!!!!"),
+                                                   tr("Le champs IP de la camera contient une erreur"),
+                                                   QMessageBox::Ok);
+        valide=false;
+    }
+    //Port Camera
+    if(!this->verifierPort(infosConnexion.at(2)))
+    {
+        QMessageBox::critical(this, tr("!!!!Erreur!!!!"),
+                                                   tr("Le champs IP de la camera contient une erreur"),
+                                                   QMessageBox::Ok);
+        valide=false;
+    }*/
     return valide;
+}
+
+QVector<QString> DialogConnexion::getTabInfoConnexion()
+{
+    return infosConnexion;
+}
+
+void DialogConnexion::on_buttonBox_accepted()
+{
+    acceptInfoRobot();
 }
