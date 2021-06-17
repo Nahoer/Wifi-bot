@@ -6,6 +6,7 @@
 #include <QImage>
 #include <QWebEngineView>
 #include<QNetworkAccessManager>
+#include <QKeyEvent>
 
 
 namespace Ui {
@@ -24,6 +25,16 @@ public:
 private slots:
 
     void on_camHaut_pressed();
+
+    void on_camBas_pressed();
+
+    void on_camDroite_pressed();
+
+    void on_camGauche_pressed();
+
+    void keyPressEvent(QKeyEvent *);
+    //void keyReleaseEvent(QKeyEvent *);
+
 
 private:
     Ui::FormCamView *ui;

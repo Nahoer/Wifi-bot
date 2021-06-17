@@ -23,4 +23,44 @@ FormCamView::~FormCamView()
 void FormCamView::on_camHaut_pressed()
 {
     this->depCam->get(QNetworkRequest(QUrl("http://192.168.1.11:8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=-200")));
+
+}
+
+void FormCamView::on_camBas_pressed()
+{
+    this->depCam->get(QNetworkRequest(QUrl("http://192.168.1.11:8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=200")));
+}
+
+void FormCamView::on_camDroite_pressed()
+{
+    this->depCam->get(QNetworkRequest(QUrl("http://192.168.1.11:8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=-200")));
+}
+
+void FormCamView::on_camGauche_pressed()
+{
+    this->depCam->get(QNetworkRequest(QUrl("http://192.168.1.11:8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=200")));
+}
+
+void FormCamView::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_I)
+    {
+        //haut
+        this->depCam->get(QNetworkRequest(QUrl("http://192.168.1.11:8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=-200")));
+    }
+    else if(event->key() == Qt::Key_K)
+    {
+        //bas
+        this->depCam->get(QNetworkRequest(QUrl("http://192.168.1.11:8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=200")));
+    }
+    else if(event->key() == Qt::Key_J)
+    {
+        //gauche
+        this->depCam->get(QNetworkRequest(QUrl("http://192.168.1.11:8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=200")));
+    }
+    else if(event->key() == Qt::Key_L)
+    {
+        //droite
+        this->depCam->get(QNetworkRequest(QUrl("http://192.168.1.11:8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=-200")));
+    }
 }
