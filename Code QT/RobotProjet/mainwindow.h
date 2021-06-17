@@ -7,6 +7,7 @@
 #include <QString>
 #include <QKeyEvent>
 #include <QVector>
+#include "formcamview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,7 +23,7 @@ public:
     void connectToRobot();
     void disconnectToRobot();
 private slots:
-    void openDialogConnexion();
+    void openDialogConnexion(QAction *act);
     void getInfoDialogConnexion();
 
     void on_pushButton_2_pressed();
@@ -36,6 +37,8 @@ private slots:
 
     void refreshInfos();
     void on_verticalSlider_valueChanged(int value);
+
+    void on_actionReconnexion_triggered();
 
 private:
     Ui::MainWindow *ui;

@@ -26,17 +26,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::openDialogConnexion(){
+void MainWindow::openDialogConnexion(QAction *act){
 
-    dialogConnect->exec();
-
+     dialogConnect->exec();
 }
 
 
 void MainWindow::connectToRobot()
 {
+    //this->ui->widget_CamStream->setUrl(infosLogin[1],infosLogin[3]);
     robotWifi->doConnect(infosLogin[0],infosLogin[2]);
-    this->ui->widgetCamStream= new FormCamView(nullptr,infosLogin[1],infosLogin[3]);
 
     timerRefresh->start(50);
 }
@@ -145,6 +144,11 @@ void MainWindow::refreshInfos()
     else
     {
         ui->label_Version->setText(robotWifi->getVersion());
+
+
+
+
+
         if(batterie.toInt()>99)
            {
             ui->label_BatterieValue->setText("100%");
@@ -163,4 +167,9 @@ void MainWindow::on_verticalSlider_valueChanged(int value)
 {
     vitesse=value;
     this->ui->labelVitesse->setText(QString::number(vitesse));
+}
+
+void MainWindow::on_actionReconnexion_triggered()
+{
+    disconnectToRobot();
 }

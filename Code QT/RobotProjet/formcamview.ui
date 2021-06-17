@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>534</height>
+    <height>381</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,46 +35,6 @@
    <property name="text">
     <string>Caméra :</string>
    </property>
-  </widget>
-  <widget class="QWidget" name="layoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>390</y>
-     <width>141</width>
-     <height>121</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
-     <widget class="QPushButton" name="camHaut">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QPushButton" name="camGauche">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2">
-     <widget class="QPushButton" name="camDroite">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QPushButton" name="camBas">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-   </layout>
   </widget>
  </widget>
  <customwidgets>
