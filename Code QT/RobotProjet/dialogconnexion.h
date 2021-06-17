@@ -22,6 +22,8 @@ private slots:
     void acceptInfoRobot();
 
     void on_buttonBox_accepted();
+    bool verifierPort(QString port);
+    bool verifierIp(QString ip);
 
 private:
     Ui::DialogConnexion *ui;

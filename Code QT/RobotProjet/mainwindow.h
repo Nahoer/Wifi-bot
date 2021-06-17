@@ -19,25 +19,21 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
-
+    void connectToRobot();
+    void disconnectToRobot();
 private slots:
-    void on_pushButton_pressed();
     void openDialogConnexion();
     void getInfoDialogConnexion();
+
     void on_pushButton_2_pressed();
-
-    void on_pushButtonDeconnect_pressed();
-
     void on_pushButtonStopRobot_pressed();
-
     void on_pushButtonReculer_pressed();
-
     void on_pushButtonGauche_pressed();
-
     void on_pushButtonDroite_pressed();
+
     void keyPressEvent(QKeyEvent *);
     void keyReleaseEvent(QKeyEvent *);
+
     void refreshInfos();
     void on_verticalSlider_valueChanged(int value);
 

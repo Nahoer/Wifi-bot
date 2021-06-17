@@ -22,7 +22,11 @@
     </widget>
    </item>
    <item row="4" column="1">
-    <widget class="QLineEdit" name="lineEditIpCamera"/>
+    <widget class="QLineEdit" name="lineEditIpCamera">
+     <property name="text">
+      <string>192.168.1.11</string>
+     </property>
+    </widget>
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="label_4">
@@ -32,7 +36,11 @@
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="QLineEdit" name="lineEditPortCamera"/>
+    <widget class="QLineEdit" name="lineEditPortCamera">
+     <property name="text">
+      <string>80</string>
+     </property>
+    </widget>
    </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label">
@@ -42,10 +50,18 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QLineEdit" name="lineEditIpRobot"/>
+    <widget class="QLineEdit" name="lineEditIpRobot">
+     <property name="text">
+      <string>192.168.1.11</string>
+     </property>
+    </widget>
    </item>
    <item row="2" column="1">
-    <widget class="QLineEdit" name="lineEditPortRobot"/>
+    <widget class="QLineEdit" name="lineEditPortRobot">
+     <property name="text">
+      <string>15020</string>
+     </property>
+    </widget>
    </item>
    <item row="4" column="0">
     <widget class="QLabel" name="label_5">

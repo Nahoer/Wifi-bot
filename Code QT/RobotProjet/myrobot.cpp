@@ -44,7 +44,7 @@ quint16 MyRobot::Crc16(QByteArray tab, int pos)
 
 
 
-void MyRobot::doConnect() {
+void MyRobot::doConnect(QString ip, QString port) {
     socket = new QTcpSocket(this); // socket creation
     connect(socket, SIGNAL(connected()),this, SLOT(connected()));
     connect(socket, SIGNAL(disconnected()),this, SLOT(disconnected()));
@@ -52,7 +52,8 @@ void MyRobot::doConnect() {
     connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
     qDebug() << "connecting..."; // this is not blocking call
     //socket->connectToHost("LOCALHOST", 15020);
-    socket->connectToHost("192.168.1.11", 15020); // connection to wifibot
+    socket->connectToHost(ip, port.toInt()); // connection to wifibot
+    //socket->connectToHost("192.168.1.11", 15020);
     // we need to wait...
     if(!socket->waitForConnected(5000)) {
         qDebug() << "Error: " << socket->errorString();
@@ -86,7 +87,16 @@ void MyRobot::readyRead() {
     emit updateUI(DataReceived);
     QByteArray reponseHex = DataReceived.toHex();
     batterieLevel= reponseHex.at(4)+reponseHex.at(5);
-    versionRobot = reponseHex.at(36);
+    this->IRAvantGauche = reponseHex.at(6)+reponseHex.at(7);
+    this->IRArrièreGauche = reponseHex.at(8)+reponseHex.at(9);
+    this->IRAvantDroit = reponseHex.at(22)+reponseHex.at(23);
+    this->IRArrièreDroit = reponseHex.at(24) + reponseHex.at(25);
+    versionRobot = reponseHex.at(36)+reponseHex.at(37);
+    qDebug() << "byte 1 :";
+    qDebug() << reponseHex.at(36);
+    qDebug() << "byte 2 :";
+    qDebug() << reponseHex.at(37);
+
 }
 
 void MyRobot::MyTimerSlot() {

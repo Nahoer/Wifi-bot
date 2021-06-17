@@ -16,7 +16,7 @@ class MyRobot : public QObject {
 public:
 
     explicit MyRobot(QObject *parent = 0);
-    void doConnect();
+    void doConnect(QString ip, QString port);
     void disConnect();
     QByteArray DataToSend;
     QByteArray DataReceived;
@@ -46,6 +46,10 @@ public slots:
     int batterieLevel;
     bool connecterAuRobot;
     int versionRobot;
+    int IRAvantGauche;
+    int IRAvantDroit;
+    int IRArrièreGauche;
+    int IRArrièreDroit;
 };
 
 #endif // MYROBOT_H
