@@ -28,16 +28,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::openDialogConnexion(){
 
-    dialogConnect->exec();
-
+     dialogConnect->exec();
 }
 
-void MainWindow::on_pushButton_pressed()
+
+void MainWindow::connectToRobot()
 {
-   robotWifi->doConnect(infosLogin[0],infosLogin[2]);
-   ui->pushButton->setDisabled(true);
-   ui->pushButtonDeconnect->setDisabled(false);
-   timerRefresh->start(50);
+    //this->ui->widget_CamStream->setUrl(infosLogin[1],infosLogin[3]);
+    robotWifi->doConnect(infosLogin[0],infosLogin[2]);
+
+    timerRefresh->start(50);
+}
+
+void MainWindow::disconnectToRobot()
+{
+    robotWifi->disConnect();
+    timerRefresh->stop();
 }
 
 void MainWindow::getInfoDialogConnexion()
@@ -47,22 +53,20 @@ void MainWindow::getInfoDialogConnexion()
     infosLogin.insert(1,dialogConnect->getTabInfoConnexion().at(1));
     infosLogin.insert(2,dialogConnect->getTabInfoConnexion().at(2));
     infosLogin.insert(3,dialogConnect->getTabInfoConnexion().at(3));
-    qDebug()<<infosLogin;
-
+    if(infosLogin.size()<4)
+    {
+        QMessageBox::critical(this, tr("Erreur!"),tr("Les informations de connexion ne sont pas valides"),
+                                        QMessageBox::Ok);
+    }
+    else  connectToRobot();
 }
+
 
 void MainWindow::on_pushButton_2_pressed()
 {
     robotWifi->sendRouler(vitesse);
 }
 
-void MainWindow::on_pushButtonDeconnect_pressed()
-{
-    robotWifi->disConnect();
-    ui->pushButton->setDisabled(false);
-    ui->pushButtonDeconnect->setDisabled(true);
-    timerRefresh->stop();
-}
 
 void MainWindow::on_pushButtonStopRobot_pressed()
 {
@@ -135,19 +139,34 @@ void MainWindow::refreshInfos()
     if(batterie.toInt()<0)
     {
        ui->label_BatterieValue->setText("Connexion en cours");
-       ui->label_Version->setText(robotWifi->getVersion());
+       ui->label_Version->setText("Connexion en cours");
     }
     else
     {
+        ui->label_Version->setText(robotWifi->getVersion());
+        ui->label_BatterieValue->setText(robotWifi->getBatterie()+"%");
+        ui->label_CaptInfra_AD->setText(QString::number(robotWifi->getIRAvantDroit()));
+        ui->label_CaptInfra_AG->setText(QString::number(robotWifi->getIRAvantGauche()));
+        ui->label_CaptInfra_BD->setText(QString::number(robotWifi->getIRArriereDroit()));
+        ui->label_CaptInfra_BG->setText(QString::number(robotWifi->getIRArriereGauche()));
+        ui->label_vitesseD->setText(QString::number(robotWifi->getVitesseDroite()));
+        ui->label_vitesseG->setText(QString::number(robotWifi->getVitesseGauche()));
+        ui->label_odometrieD->setText(QString::number(robotWifi->getOdometryDroite()));
+        ui->label_odometrieG->setText(QString::number(robotWifi->getOdometryGauche()));
+
+
+
+
+
         if(batterie.toInt()>99)
            {
-            ui->label_BatterieValue->setText(batterie);
-            ui->label_Version->setText(robotWifi->getVersion());
+            ui->label_BatterieValue->setText("100%");
+
             }
         else
         {
-            ui->label_BatterieValue->setText(robotWifi->getBatterie()+"%");
-            ui->label_Version->setText(robotWifi->getVersion());
+
+
             timerRefresh->start(50);
         }
 
@@ -158,4 +177,9 @@ void MainWindow::on_verticalSlider_valueChanged(int value)
 {
     vitesse=value;
     this->ui->labelVitesse->setText(QString::number(vitesse));
+}
+
+void MainWindow::on_actionReconnexion_triggered()
+{
+    disconnectToRobot();
 }

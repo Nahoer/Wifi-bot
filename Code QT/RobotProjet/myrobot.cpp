@@ -86,22 +86,16 @@ void MyRobot::readyRead() {
     emit updateUI(DataReceived);
     HexaArray response = HexaArray();
     response.FromByteArray(DataReceived.toHex());
-    QByteArray reponseHex = DataReceived.toHex();
     batterieLevel= response.getAsInt(2);
     IRAvantGauche = response.getAsInt(3);
-    IRArrièreGauche = response.getAsInt(4);
+    IRArriereGauche = response.getAsInt(4);
     IRAvantDroit = response.getAsInt(11);
-    IRArrièreDroit = response.getAsInt(12);
-    versionRobot = response.getAsInt(18);
+    IRArriereDroit = response.getAsInt(12);
+    versionRobot = response.asciiToInt(18);
     odometryGauche = response.getAsInt(5)+response.getAsInt(6)+response.getAsInt(7)+response.getAsInt(8);
     odometryDroite = response.getAsInt(16)+response.getAsInt(15)+response.getAsInt(14)+response.getAsInt(13);
     vitesseGauche = response.getAsInt(0)+response.getAsInt(1);
     vitesseDroite = response.getAsInt(10)+response.getAsInt(9);
-
-    qDebug() << "vitesse gauche :";
-    qDebug() << vitesseGauche;
-    qDebug() << "vitesse droite :";
-    qDebug() << vitesseDroite;
 
 }
 
@@ -225,4 +219,44 @@ QString MyRobot::getVersion()
 bool MyRobot::estConnecter()
 {
     return connecterAuRobot;
+}
+
+int MyRobot::getIRAvantDroit()
+{
+    return this->IRAvantDroit;
+}
+
+int MyRobot::getIRAvantGauche()
+{
+    return this->IRAvantGauche;
+}
+
+int MyRobot::getIRArriereDroit()
+{
+   return this->IRArriereDroit;
+}
+
+int MyRobot::getIRArriereGauche()
+{
+    return this->IRArriereGauche;
+}
+
+int MyRobot::getOdometryDroite()
+{
+    return this->odometryDroite;
+}
+
+int MyRobot::getOdometryGauche()
+{
+    return this->odometryGauche;
+}
+
+int MyRobot::getVitesseDroite()
+{
+    return this->vitesseDroite;
+}
+
+int MyRobot::getVitesseGauche()
+{
+    return this->vitesseGauche;
 }

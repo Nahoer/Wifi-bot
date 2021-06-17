@@ -40,6 +40,14 @@ public slots:
     void readyRead();
     void MyTimerSlot();
     quint16 Crc16(QByteArray tab, int pos);
+    int getIRAvantGauche();
+    int getIRAvantDroit();
+    int getIRArriereGauche();
+    int getIRArriereDroit();
+    int getOdometryGauche();
+    int getOdometryDroite();
+    int getVitesseGauche();
+    int getVitesseDroite();
 
     private:
     QTcpSocket *socket;
@@ -49,8 +57,8 @@ public slots:
     int versionRobot;
     int IRAvantGauche;
     int IRAvantDroit;
-    int IRArrièreGauche;
-    int IRArrièreDroit;
+    int IRArriereGauche;
+    int IRArriereDroit;
     int odometryGauche;
     int odometryDroite;
     int vitesseGauche;

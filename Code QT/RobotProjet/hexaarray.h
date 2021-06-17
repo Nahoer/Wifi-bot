@@ -17,6 +17,7 @@ public:
     HexaArray();
     void FromByteArray(QByteArray);
     int getAsInt(int index);
+    int asciiToInt(int index);
 private:
     QByteArray array;
 
