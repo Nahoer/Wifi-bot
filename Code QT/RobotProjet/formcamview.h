@@ -19,18 +19,24 @@ class FormCamView : public QWidget
 
 public:
     explicit FormCamView(QWidget *parent = nullptr,QString ipCam="",QString portCam="");
+    void setCam(QString ipCam, QString portCam);
+    void refreshURL();
+    void setOffline();
+    void depCam_Haut();
+
+    void depCam_Bas();
+
+    void depCam_Droite();
+
+    void depCam_Gauche();
     ~FormCamView();
 
 
 private slots:
 
-    void on_camHaut_pressed();
 
-    void on_camBas_pressed();
 
-    void on_camDroite_pressed();
 
-    void on_camGauche_pressed();
 
     void keyPressEvent(QKeyEvent *);
     //void keyReleaseEvent(QKeyEvent *);

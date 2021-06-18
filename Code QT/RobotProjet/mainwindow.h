@@ -22,7 +22,7 @@ public:
     void connectToRobot();
     void disconnectToRobot();
 private slots:
-    void openDialogConnexion();
+    void openDialogConnexion(QAction *);
     void getInfoDialogConnexion();
 
     void on_pushButton_2_pressed();
@@ -36,6 +36,14 @@ private slots:
 
     void refreshInfos();
     void on_verticalSlider_valueChanged(int value);
+
+    void on_camHaut_pressed();
+
+    void on_camBas_pressed();
+
+    void on_camGauche_pressed();
+
+    void on_camDroite_pressed();
 
 private:
     Ui::MainWindow *ui;

@@ -6,14 +6,15 @@ FormCamView::FormCamView(QWidget *parent,QString ipCam,QString portCam) :
     ui(new Ui::FormCamView)
 {
     ui->setupUi(this);
+
+}
+
+/*Initialise l'URL de la cam et l'affiche*/
+void FormCamView::setCam(QString ipCam, QString portCam){
     this->depCam = new QNetworkAccessManager();
     this->url="http://"+ipCam+":"+portCam;
     //this->ui->cam->load(QUrl("http://192.168.1.11:8080/?action=stream"));
     this->ui->cam->setHtml("<image src='"+url+"/?action=stream' width='100%' height='95%'/>");
-    this->ui->camHaut->setIcon(QIcon("../../Images/Icons/chevron_up.svg"));
-    this->ui->camBas->setIcon(QIcon("../../Images/Icons/chevron_down.svg"));
-    this->ui->camDroite->setIcon(QIcon("../../Images/Icons/chevron_right.svg"));
-    this->ui->camGauche->setIcon(QIcon("../../Images/Icons/chevron_left.svg"));
 }
 
 FormCamView::~FormCamView()
@@ -21,23 +22,23 @@ FormCamView::~FormCamView()
     delete ui;
 }
 
-void FormCamView::on_camHaut_pressed()
+void FormCamView::depCam_Haut()
 {
     this->depCam->get(QNetworkRequest(QUrl(url+"/?action=command&dest=0&plugin=0&id=10094853&group=1&value=-200")));
 
 }
 
-void FormCamView::on_camBas_pressed()
+void FormCamView::depCam_Bas()
 {
     this->depCam->get(QNetworkRequest(QUrl(url+"/?action=command&dest=0&plugin=0&id=10094853&group=1&value=200")));
 }
 
-void FormCamView::on_camDroite_pressed()
+void FormCamView::depCam_Droite()
 {
     this->depCam->get(QNetworkRequest(QUrl(url+"/?action=command&dest=0&plugin=0&id=10094852&group=1&value=-200")));
 }
 
-void FormCamView::on_camGauche_pressed()
+void FormCamView::depCam_Gauche()
 {
     this->depCam->get(QNetworkRequest(QUrl(url+"/?action=command&dest=0&plugin=0&id=10094852&group=1&value=200")));
 }
@@ -64,4 +65,13 @@ void FormCamView::keyPressEvent(QKeyEvent *event)
         //droite
         this->depCam->get(QNetworkRequest(QUrl(url+"/?action=command&dest=0&plugin=0&id=10094852&group=1&value=-200")));
     }
+}
+
+void FormCamView::refreshURL(){
+    this->ui->cam->reload();
+}
+
+void FormCamView::setOffline(){
+
+    this->ui->cam->setHtml("<H1> OFFLINE</H1>");
 }

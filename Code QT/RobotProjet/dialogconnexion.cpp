@@ -17,8 +17,8 @@ DialogConnexion::~DialogConnexion()
 void DialogConnexion::acceptInfoRobot()
 {
     infosConnexion.clear();
-    infosConnexion.insert(0,ui->lineEditIpCamera->text());
-    infosConnexion.insert(1,ui->lineEditIpRobot->text());
+    infosConnexion.insert(0,ui->lineEditIpRobot->text());
+    infosConnexion.insert(1,ui->lineEditIpCamera->text());
     infosConnexion.insert(2,ui->lineEditPortRobot->text());
     infosConnexion.insert(3,ui->lineEditPortCamera->text());
     if(checkInfosInput()){

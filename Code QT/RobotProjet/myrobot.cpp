@@ -51,7 +51,6 @@ void MyRobot::doConnect(QString ip, QString port) {
     connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
     connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
     qDebug() << "connecting..."; // this is not blocking call
-    //socket->connectToHost("LOCALHOST", 15020);
     socket->connectToHost(ip, port.toInt()); // connection to wifibot
     //socket->connectToHost("192.168.1.11", 15020);
     // we need to wait...
@@ -85,17 +84,18 @@ void MyRobot::readyRead() {
     qDebug() << "reading..."; // read the data from the socket
     DataReceived = socket->readAll();
     emit updateUI(DataReceived);
-    QByteArray reponseHex = DataReceived.toHex();
-    batterieLevel= reponseHex.at(4)+reponseHex.at(5);
-    this->IRAvantGauche = reponseHex.at(6)+reponseHex.at(7);
-    this->IRArrièreGauche = reponseHex.at(8)+reponseHex.at(9);
-    this->IRAvantDroit = reponseHex.at(22)+reponseHex.at(23);
-    this->IRArrièreDroit = reponseHex.at(24) + reponseHex.at(25);
-    versionRobot = reponseHex.at(36)+reponseHex.at(37);
-    qDebug() << "byte 1 :";
-    qDebug() << reponseHex.at(36);
-    qDebug() << "byte 2 :";
-    qDebug() << reponseHex.at(37);
+    HexaArray response = HexaArray();
+    response.FromByteArray(DataReceived.toHex());
+    batterieLevel= response.getAsInt(2);
+    IRAvantGauche = response.getAsInt(3);
+    IRArriereGauche = response.getAsInt(4);
+    IRAvantDroit = response.getAsInt(11);
+    IRArriereDroit = response.getAsInt(12);
+    versionRobot = response.asciiToInt(18);
+    odometryGauche = response.getAsInt(5)+response.getAsInt(6)+response.getAsInt(7)+response.getAsInt(8);
+    odometryDroite = response.getAsInt(16)+response.getAsInt(15)+response.getAsInt(14)+response.getAsInt(13);
+    vitesseGauche = response.getAsInt(0)+response.getAsInt(1);
+    vitesseDroite = response.getAsInt(10)+response.getAsInt(9);
 
 }
 
@@ -106,6 +106,7 @@ void MyRobot::MyTimerSlot() {
     Mutex.unlock();
 }
 
+/*Méthode pour faire avancer le robot en fonction des paramètres (vitesse, etc*/
 void MyRobot::sendRouler(int vitesse)
 {
     unsigned char zero=0;
@@ -125,6 +126,7 @@ void MyRobot::sendRouler(int vitesse)
     Mutex.unlock();
 }
 
+/*Méthode pour arrêter le robot en fonction des paramètres (vitesse, etc*/
 void MyRobot::sendStop()
 {
     unsigned char zero =0;
@@ -143,6 +145,7 @@ void MyRobot::sendStop()
     Mutex.unlock();
 }
 
+/*Méthode pour faire reculer le robot en fonction des paramètres (vitesse, etc*/
 void MyRobot::sendReculer(int vitesse)
 {
     unsigned char zero =0;
@@ -162,6 +165,7 @@ void MyRobot::sendReculer(int vitesse)
     Mutex.unlock();
 }
 
+/*Méthode pour faire tourner le robot à gauche en fonction des paramètres (vitesse, etc*/
 void MyRobot::sendGauche(int vitesse)
 {
     unsigned char zero =0;
@@ -178,6 +182,7 @@ void MyRobot::sendGauche(int vitesse)
     DataToSend[8] = crcsend>>8;
 }
 
+/*Méthode pour faire tourner le robot à droite en fonction des paramètres (vitesse, etc*/
 void MyRobot::sendDroite(int vitesse)
 {
     unsigned char zero =0;
@@ -219,4 +224,44 @@ QString MyRobot::getVersion()
 bool MyRobot::estConnecter()
 {
     return connecterAuRobot;
+}
+
+int MyRobot::getIRAvantDroit()
+{
+    return this->IRAvantDroit;
+}
+
+int MyRobot::getIRAvantGauche()
+{
+    return this->IRAvantGauche;
+}
+
+int MyRobot::getIRArriereDroit()
+{
+   return this->IRArriereDroit;
+}
+
+int MyRobot::getIRArriereGauche()
+{
+    return this->IRArriereGauche;
+}
+
+int MyRobot::getOdometryDroite()
+{
+    return this->odometryDroite;
+}
+
+int MyRobot::getOdometryGauche()
+{
+    return this->odometryGauche;
+}
+
+int MyRobot::getVitesseDroite()
+{
+    return this->vitesseDroite;
+}
+
+int MyRobot::getVitesseGauche()
+{
+    return this->vitesseGauche;
 }
